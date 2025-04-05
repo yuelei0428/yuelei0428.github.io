@@ -346,27 +346,7 @@
 
     </section>
 
-    <section class="container py-5">
-      <div class="row pt-4 pb-3">
-        <h2 class="text-center text-sm-start pb-2 pb-lg-0">Method</h2>
-      </div>
-      <div class="col">
-        <p align="justify">
-          Overview of the Visual Acoustic Fields framework. The model consists of two main components: sound
-          generation and sound localization. Given multiview images, a feature-augmented 3D Gaussian Splatting
-          (feature 3DGS) representation is constructed. For sound generation, localized multi-level features
-          queried from the feature 3DGS are used as conditions to fine-tune a pretrained Stable Audio diffusion
-          model to synthesize impact sounds. For sound localization, a fine-tuned AudioCLIP encoder maps input
-          audio queries to the feature 3DGS, allowing the model to localize the corresponding impact location
-          by computing feature similarity. Trainable, frozen, and fine-tuned components are indicated in the
-          diagram.
-        </p>
-      </div>
-      <div style="text-align: center;"><img src='./data/framework.png' width="1000" alt='missing' /></div>
 
-    </section>
-
-    <br>
 
     <section class="container py-5">
       <div class="row pt-4 pb-3">
@@ -604,7 +584,28 @@
 
     </section>
 
-    <br><br>
+    <!-- <br> -->
+
+    <section class="container py-5">
+      <div class="row pt-4 pb-3">
+        <h2 class="text-center text-sm-start pb-2 pb-lg-0">Method</h2>
+      </div>
+      <div class="col">
+        <p align="justify">
+          Overview of the Visual Acoustic Fields framework. The model consists of two main components: sound
+          generation and sound localization. Given multiview images, a feature-augmented 3D Gaussian Splatting
+          (feature 3DGS) representation is constructed. For sound generation, localized multi-level features
+          queried from the feature 3DGS are used as conditions to fine-tune a pretrained Stable Audio diffusion
+          model to synthesize impact sounds. For sound localization, a fine-tuned AudioCLIP encoder maps input
+          audio queries to the feature 3DGS, allowing the model to localize the corresponding impact location
+          by computing feature similarity. Trainable, frozen, and fine-tuned components are indicated in the
+          diagram.
+        </p>
+      </div>
+      <div style="text-align: center;"><img src='./data/framework.png' width="1000" alt='missing' /></div>
+
+    </section>
+    <br>
 
     <style>
       .img-container {
