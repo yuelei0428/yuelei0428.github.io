@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title> Visual Acoustic Fields </title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="bootstrap, business, creative">
+  <meta name="author" content="Createx Studio">
+  <link rel="icon" href="./data/logo.png">
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon and Touch Icons -->
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="msapplication-TileColor" content="#080032">
+  <meta name="msapplication-config" content="./assets/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Vendor Styles -->
+  <link rel="stylesheet" media="screen" href="./assets/vendor/boxicons/css/boxicons.min.css" />
+  <link rel="stylesheet" media="screen" href="./assets/vendor/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" media="screen" href="./assets/vendor/lightgallery/css/lightgallery-bundle.min.css" />
+
+  <!-- Main Theme Styles + Bootstrap -->
+  <link rel="stylesheet" media="screen" href="./assets/css/theme.min.css">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Page loading styles -->
+  <style>
+    pre {
+      border: 1px solid #eff2fc;
+      display: none;
+      font-size: 12px;
+      margin: 5px 0;
+      max-width: 96%;
+      overflow: auto;
+      padding: 12px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .page-loading {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-transition: all .4s .2s ease-in-out;
+      transition: all .4s .2s ease-in-out;
+      background-color: #fff;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 9999
+    }
+
+    .dark-mode .page-loading {
+      background-color: #131022;
+    }
+
+    .page-loading.active {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .page-loading-inner {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      -webkit-transition: opacity .2s ease-in-out;
+      transition: opacity .2s ease-in-out;
+      opacity: 0
+    }
+
+    .page-loading.active>.page-loading-inner {
+      opacity: 1
+    }
+
+    .page-loading-inner>span {
+      display: block;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #9397ad
+    }
+
+    .dark-mode .page-loading-inner>span {
+      color: #fff;
+      opacity: .6
+    }
+
+    .page-spinner {
+      display: inline-block;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin-bottom: .75rem;
+      vertical-align: text-bottom;
+      border: .15em solid #b4b7c9;
+      border-right-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: spinner .75s linear infinite;
+      animation: spinner .75s linear infinite
+    }
+
+    .dark-mode .page-spinner {
+      border-color: rgba(255, 255, 255, .4);
+      border-right-color: transparent
+    }
+
+    @-webkit-keyframes spinner {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spinner {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #tracks ul {
+      line-height: 200%
+    }
+
+    #schedule th.time {
+      width: 200px
+    }
+
+    footer {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      position: relative
+    }
+
+    footer::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: '';
+      background-color: rgba(31, 39, 73, .97)
+    }
+
+    figure {
+      display: inline-block;
+      text-align: center
+    }
+
+    @media only screen and (max-width: 767px) {
+      .swiper-slide-active {
+        padding: 40px;
+      }
+    }
+  </style>
+
+
+
+
+  <style>
+    /* Artistic gradient overlay */
+    .art-gradient-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(115deg, rgba(0, 0, 0, 0.3) 0%, rgba(25, 25, 112, 0.2) 50%, rgba(255, 105, 180, 0.15) 100%);
+      mix-blend-mode: screen;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Grainy effect */
+    .grainy-bg::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      /* You can swap this with a data URL or local PNG */
+      opacity: 0.04;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+        .art-title {
+      font-size: 60px;
+      font-family: 'Calibri', sans-serif;
+      color: white;
+      font-weight: 500;
+      text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(173, 216, 230, 0.4),
+        0 0 40px rgba(135, 206, 250, 0.2);
+      position: relative;
+      z-index: 3;
+    }
+
+
+
+  </style>
+
+
+
+
+
+  <!-- Theme mode -->
+  <script>
+    let mode = window.localStorage.getItem('mode'),
+      root = document.getElementsByTagName('html')[0];
+    if (mode !== undefined && mode === 'dark') {
+      root.classList.add('dark-mode');
+    }
+    else { root.classList.remove('dark-mode'); }
+  </script>
+
+  <!-- Page loading scripts -->
+  <script>
+    (function () {
+      window.onload = function () {
+        const preloader = document.querySelector('.page-loading');
+        preloader.classList.remove('active');
+        setTimeout(function () { preloader.remove(); }, 1000);
+      };
+    })();
+  </script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+
+
+
+<body>
+  <div class="page-loading active">
+    <div class="page-loading-inner">
+      <div class="page-spinner"></div><span>Loading...</span>
+    </div>
+  </div>
+
+  <main class="page-wrapper">
+
+
+    <section class="jarallax dark-mode bg-dark py-xxl-5 grainy-bg" data-jarallax data-speed="0.4">
+      <!--    <div class="jarallax-img" style="background-image: url(./data/bg.jpg);"></div>-->
+      <!--<div class="jarallax-img" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./data/bg.jpg);"></div>-->
+      <div class="jarallax-img" style="
+                    /*background-image: url(./data/bg.jpg);*/
+                    background: linear-gradient(90deg, #1BA3E8, #D86B31);
+                    filter: blur(3px);
+                    transform: scale(1.0); /* prevents edges from showing when blurred */
+                "></div>
+
+      <div class="position-relative text-center zindex-5 overflow-hidden pt-1 py-md-4">
+        <p class="art-title" align="center"><b>MiracleLand</b>: Zero-shot 4D World Modeling <br> from a Single Image
+        </p>
+
+        <p style="font-size:22.5px; font-weight: 22.5; color:rgb(255, 255, 255)" align="center">
+          <a style="text-decoration:none; color:rgb(255, 255, 255)"
+            href="https://www.linkedin.com/in/tina-yuelei-li-697a04210/" target="_blank">Yuelei
+            Li<sup>1</sup>,</a>&nbsp;
+          <a style="text-decoration:none; color:rgb(255, 255, 255)" href="https://openreview.net/profile?id=~Lin_Zhengyang1"
+            target="_blank">Zhengyang Lin<sup>2</sup>,</a>&nbsp;
+          <a style="text-decoration:none; color:rgb(255, 255, 255)" href="https://kunhao-liu.github.io/"
+            target="_blank">Kunhao Liu<sup>3</sup>,</a>&nbsp;
+          <a style="text-decoration:none; color:rgb(255, 255, 255)" href="https://fnzhan.com/" target="_blank">Fangneng
+            Zhan<sup>4</sup>,</a>&nbsp;
+          <a style="text-decoration:none; color:rgb(255, 255, 255)" href="https://georgiagkioxari.com/"
+            target="_blank">Georgia Gkioxari<sup>1</sup></a>&nbsp;
+        </p>
+
+        <p style="font-size:25px; font-weight: 25; color:rgb(255, 255, 255)" align="center">
+          <sup>1</sup><b>Caltech</b>&nbsp;&nbsp;&nbsp;
+          <sup>2</sup><b>NUS</b>&nbsp;&nbsp;&nbsp;
+          <sup>3</sup><b>NTU</b>&nbsp;&nbsp;&nbsp;
+          <sup>4</sup><b>MIT</b>
+        </p>
+
+<!--        <br>-->
+<!--        <div style="text-align: center;">-->
+<!--          <figure>-->
+<!--            <a href='https://arxiv.org/abs/2503.24270' style="color:rgb(255, 255, 255)"><img-->
+<!--                src='./data/paper_image.jpg' width="60" alt='missing' />-->
+<!--              <figcaption>Paper</figcaption>-->
+<!--            </a>-->
+<!--          </figure>-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          <figure>-->
+<!--            <a href="https://huggingface.co/datasets/tinaxxxxx/visual_acoustic_fields/tree/main"-->
+<!--              style="color:rgb(255, 255, 255)"><img src='./data/dataset_icon.png' width="75" alt='missing' />-->
+<!--              <figcaption>Dataset</figcaption>-->
+<!--            </a>-->
+<!--          </figure>-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--          <figure>-->
+<!--            <a href="./data/bg.jpg" style="color:rgb(255, 255, 255)"><img src='./data/github.png' width="75"-->
+<!--                alt='missing' />-->
+<!--              <figcaption>GitHub</figcaption>-->
+<!--            </a>-->
+<!--          </figure>-->
+<!--        </div>-->
+    </section>
+
+
+
+    <section class="container py-5">
+
+<!--      <div style="text-align: center;">-->
+<!--        <video poster="" id="tree" autoplay controls muted loop width="900">-->
+<!--          <source src="./data/6scene_combined.mp4" type="video/mp4">-->
+<!--        </video>-->
+<!--        <br>-->
+<!--        <p style="font-size:24px; font-weight: 24" align="center">Open the audio to hear the interactive sound we-->
+<!--          generated.</p>-->
+<!--      </div>-->
+
+
+
+      <br>
+
+      <!-- <div class="row pt-4 pb-3">
+        <h2 class="text-center text-sm-start pb-2 pb-lg-0" >Abstract</h2>
+      </div> -->
+
+      <div class="row pt-4 pb-3 justify-content-center">
+        <div class="col-auto">
+          <h2 class="text-center">Abstract</h2>
+        </div>
+      </div>
+      <div class="col" style="max-width: 900px; margin: 0 auto;">
+        <p align="justify">
+          We present MiracleLand, a novel framework for dynamic 3D scene generation conditioned on image and text. Existing
+          methods on dynamic 3D scene generation either require a physics simulator to solve the scene dynamics based on
+          the dynamic objects' materials that are not generalizable to complicated real-world scenes, or require computationally
+          expensive large-scale training. In contrast, we present a zero-shot, simulation-free pipeline that takes advantage
+          of powerful pretrained video generation models to generalize effectively to complex real-world scenes. Our method
+          first uses a pretrained image and text to video model to synthesize a monocular video, and subsequently reconstructs
+          the dynamic 3D scene using 4D Gaussian Splatting. However, directly applying vanilla 4D Gaussian Splatting to
+          monocular videos often leads to artifacts due to incomplete geometry and view inconsistency. To address these
+          problems, we introduce 1) a geometry-based 4D Gaussian initialization to enhance structural accuracy, 2) an inpainting
+          layering strategy to resolve disocclusion hole artifacts that emerge under novel-view rendering, and 3) a view-plane–constrained
+          splatting to avoid floating Gaussian points. The resulting 4D Gaussians enable controllable rendering from different viewing angles.
+        </p>
+      </div>
+      <div style="text-align: center;"><img src='./data/teaser.jpg' width="900" alt='missing' /></div>
+
+    </section>
+
+    <hr style="width: 60%; margin: 40px auto; border: none; border-top: 2px solid rgba(255, 255, 255, 0.2);">
+
+
+    <section class="container py-5">
+      <!-- <div class="row pt-4 pb-3">
+        <h2 class="text-center text-sm-start pb-2 pb-lg-0">Dataset</h2>
+      </div> -->
+
+      <div class="row pt-4 pb-3 justify-content-center">
+        <div class="col-auto">
+          <h2 class="text-center">Comparison</h2>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+
+
+        <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/1.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+        <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/2.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/3.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/4.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/5.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/6.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/7.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/8.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/9.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+                <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/10.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+         </div>
+
+        <br><br>
+
+    </section>
+
+
+    <hr style="width: 60%; margin: 40px auto; border: none; border-top: 2px solid rgba(255, 255, 255, 0.2);">
+
+    <!-- <section class="container py-5">
+      <div class="row pt-4 pb-3">
+        <h2 class="text-center text-sm-start pb-2 pb-lg-0">Results</h2>
+      </div> -->
+
+    <section class="container py-5">
+
+<!--      <div style="text-align: center;">-->
+      <div class="row pt-4 pb-3 justify-content-center">
+        <div class="col-auto">
+          <h2 class="text-center">Ablation</h2>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+
+        <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/ablation1.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+
+        <video id="tree" controls muted loop autoplay width="1000">
+          <source src="./data/ablation2.mp4" type="video/mp4">
+        </video>
+        <br>
+        <br>
+        <br>
+
+ </div>
+
+
+        <br><br>
+
+    </section>
+
+
+
+
+
+
+    <style>
+      .img-container {
+        text-align: center;
+        display: block;
+      }
+    </style>
+
+  </main>
+
+  <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+    <div class="container text-center pt-lg-3 opacity-90">
+      <!--          <div class="navbar-brand justify-content-center text-dark mb-2 mb-lg-4">-->
+      <!--              <img src="./data/logo.png" class="me-2" width="25" alt="Logo">-->
+      <!--          </div>-->
+      <!--      <p class="text-center text-light mt-lg-4 mb-0 opacity-90">-->
+      <!--                    <img src="./data/logo.png" class="me-2" width="25" alt="Logo">-->
+      <!--                    Contact: <a href="mailto:fzhan@mpi-inf.mpg.de">yul189@ucsd.edu</a>&nbsp;&nbsp;&nbsp;-->
+      <span class="text-light"> Copyright &copy; </span>
+      <!--      </p>-->
+    </div>
+  </footer>
+
+  <!-- Back to top button -->
+  <a href="#top" class="btn-scroll-top" data-scroll>
+    <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+    <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+  </a>
+
+
+  <!-- Vendor Scripts -->
+  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="./assets/vendor/lightgallery/lightgallery.min.js"></script>
+  <script src="./assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
+  <script src="./assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+  <script src="./assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+
+  <!-- Main Theme Script -->
+  <script src="./assets/js/theme.min.js"></script>
+  <script>
+    document.addEventListener('scroll', function (e) {
+      let currentOffset = window.scrollY + 80, currentSection = "",
+        sections = ["tracks", "submission", "dates", "schedule", "speakers", "organizers", "awards", "previous"];
+      for (let i = 0; i < sections.length; ++i) {
+        if (currentOffset < document.getElementById(sections[i]).offsetTop) { break; }
+        currentSection = sections[i];
+      }
+
+      let navbar = document.getElementsByClassName("navbar-nav")[0],
+        navLinks = navbar.getElementsByTagName("a");
+
+      for (let i = 0; i < navLinks.length; ++i) {
+        navLinks[i].classList.remove("active");
+        if (navLinks[i].getAttribute("href") == "#" + currentSection) {
+          navLinks[i].classList.add("active");
+        }
+      }
+    })
+  </script>
+
+
+
+  <script type="text/javascript">
+    $('#schedule').on('click', '.abstract', function () {
+      var bibtexBlock = $('pre', $(this).parent().parent().parent()),
+        isVisible = bibtexBlock.is(':visible')
+
+      if (isVisible) { bibtexBlock.slideUp(36) }
+      else { bibtexBlock.slideDown(36) }
+    })
+  </script>
+
+</body>
+
+
+
+</html>
